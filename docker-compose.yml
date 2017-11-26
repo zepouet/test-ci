@@ -48,6 +48,18 @@ services:
       - "traefik.backend=gitlab"
       - "traefik.frontend.entryPoints=http"
 
+  portainer:
+    container_name: portainer
+    image: portainer/portainer
+    restart: unless-stopped
+    labels:
+      - "traefik.frontend.rule=Host:portainer.${HOSTNAME}"
+      - "traefik.port=9000"
+      - "traefik.backend=portainer"
+      - "traefik.frontend.entryPoints=http"
+    volumes:
+        - "/var/run/docker.sock:/var/run/docker.sock"
+
 volumes:
   jenkins-home:
   gitlab-conf:
